@@ -22,22 +22,16 @@ load_previous_npm_node_versions() {
 
 download_node() {
   if [ ! -f ${cached_node} ]; then
-    echo "Installing N version manager..."
-    curl -L https://bit.ly/n-install | bash
+    local platform=linux-x64
+    local url="https://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64.tar.gz"
 
     echo "Downloading and installing node $node_version..."
-    n $node_version
 
-#    local platform=linux-x64
-#    local url="https://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64.tar.gz"
-#
-#    echo "Downloading and installing node $node_version..."
-#
-#    local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o ${cached_node} --write-out "%{http_code}")
-#
-#    if [ "$code" != "200" ]; then
-#      echo "Unable to download node: $code" && false
-#    fi
+    local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o ${cached_node} --write-out "%{http_code}")
+
+    if [ "$code" != "200" ]; then
+      echo "Unable to download node: $code" && false
+    fi
   else
     info "Using cached node ${node_version}..."
   fi
