@@ -22,9 +22,11 @@ load_previous_npm_node_versions() {
 
 download_node() {
   if [ ! -f ${cached_node} ]; then
-    echo "Downloading and installing node 20.x..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash &&\
-    apt-get install -y nodejs
+    echo "Installing N version manager..."
+    curl -L https://bit.ly/n-install | bash
+
+    echo "Downloading and installing node $node_version..."
+    n $node_version
 
 #    local platform=linux-x64
 #    local url="https://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64.tar.gz"
